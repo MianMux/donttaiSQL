@@ -22,4 +22,16 @@ public class CustomerMapperTest {
         System.out.println(customerList);
         sqlSession.close();
     }
+
+    @Test
+    public void findCustomerByJobAndName() {
+        SqlSession sqlSession = MybatisUtils.getSession();
+        CustomerMapper customerMapper = sqlSession.getMapper(CustomerMapper.class);
+        Customer customer = new Customer();
+        customer.setJob("teacher");
+//        customer.setUsername("张三");
+        List<Customer> customerList = customerMapper.findCustomerByJobOrName(customer);
+        System.out.println(customerList);
+        sqlSession.close();
+    }
 }

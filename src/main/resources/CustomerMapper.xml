@@ -5,13 +5,29 @@
 <!--使用if标签-->
 <mapper namespace="cn.edu.tyut.demo.dao.CustomerMapper">
     <select id="findCustomerByJobOrName" resultType="customer" parameterType="customer">
-        SELECT * FROM customer where 1=1
+        SELECT * FROM customer
+--         使用where标签可以自动添加一个where并将语句中第一个and去掉
+        <where>
         <if test="username != null and username!=''">
             and username = #{username}
         </if>
         <if test="job !=null and job != ''">
             and job = #{job}
         </if>
+        </where>
+    </select>
+    <select id="findCustomerByJobAndName" resultType="customer" parameterType="customer">
+        SELECT * FROM customer
+        <where>
+            <choose>
+                <when test="username != null and username!=''">
+                    and username = #{username}
+                </when>
+                <when test="job != null and job !=''">
+                    and job = #{job}
+                </when>
+            </choose>
+        </where>
     </select>
 
 </mapper>
