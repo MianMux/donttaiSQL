@@ -29,5 +29,27 @@
             </choose>
         </where>
     </select>
+<!--    set标签的使用-->
+    <update id="updateCustomer" parameterType="customer">
+    UPDATE customer
+    <set>
+    <if test="username !=null and username !=''">
+        username = #{username},
+    </if>
+    <if test="job !=null and job !=''">
+        job = #{job},
+    </if>
+    <if test="phone !=null and phone != ''">
+        phone = #{phone},
+    </if>
+    </set>
+    where id = #{id}
+    </update>
+    <select id="findCustomerById" parameterType="java.util.List" resultType="customer">
+        SELECT * FROM customer WHERE id in
+                               <foreach collection="list" open="(" close=")" separator="," item="id">
+                                   #{id}
+                               </foreach>
 
+    </select>
 </mapper>
